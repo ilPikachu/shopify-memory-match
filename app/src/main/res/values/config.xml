@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="game_pairs_preference_key" translatable="false">game_pairs_preference</string>
+    <string name="grid_size_preference_key" translatable="false">grid_size_preference</string>
+
+</resources>

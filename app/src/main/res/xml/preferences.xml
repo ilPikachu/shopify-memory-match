@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory
+        android:title="@string/settings_title"
+        app:iconSpaceReserved="false">
+
+        <ListPreference
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:defaultValue="2"
+            android:entries="@array/gamePairs"
+            android:entryValues="@array/gamePairs"
+            android:key="@string/game_pairs_preference_key"
+            android:title="@string/game_paris_preference"
+            app:iconSpaceReserved="false" />
+
+        <ListPreference
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:defaultValue="10"
+            android:entries="@array/grideSize"
+            android:entryValues="@array/grideSize"
+            android:key="@string/grid_size_preference_key"
+            android:title="@string/grid_size_preference"
+            app:iconSpaceReserved="false" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

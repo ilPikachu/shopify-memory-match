@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">Memory Match</string>
+    <string name="memory_matching_title">Memory Matching</string>
+    <string name="play_title">Let\'s play</string>
+    <string name="settings_title">Settings</string>
+    <string name="score_title">Scores</string>
+    <string name="shopify_logo_content_description">Shopify Logo</string>
+    <string name="shuffle_text">shuffle</string>
+    <string name="game_finish_title">Game complete</string>
+    <string name="game_finish_message">You have won!</string>
+    <string name="replay">Play again</string>
+    <string name="back_to_title">Back to title</string>
+    <string name="timer_enable_preference">Timer</string>
+    <string name="game_paris_preference">Game pairs selection</string>
+    <string name="grid_size_preference">Grid size selection</string>
+
+    <string-array name="gamePairs">
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
+
+    <string-array name="grideSize">
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+        <item>13</item>
+        <item>14</item>
+        <item>15</item>
+    </string-array>
+
+
+</resources>

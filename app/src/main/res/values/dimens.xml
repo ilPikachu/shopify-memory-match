@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--Polaris-->
+    <dimen name="spacing_none">0dp</dimen>
+    <dimen name="spacing_extra_tight">4dp</dimen>
+    <dimen name="spacing_tight">8dp</dimen>
+    <dimen name="spacing_base_tight">12dp</dimen>
+    <dimen name="spacing_base">16dp</dimen>
+    <dimen name="spacing_loose">24dp</dimen>
+    <dimen name="spacing_extra_loose">32dp</dimen>
+    <dimen name="spacing_mega_loose">64dp</dimen>
+
+    <dimen name="button_corner_radius">24dp</dimen>
+
+</resources>

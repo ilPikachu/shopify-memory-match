@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Shopify Polaris color scheme -->
+    <color name="polarisPrimary">#202E78</color>
+    <color name="polarisPrimaryDark">#000639</color>
+    <color name="polarisAccent">#47C1BF</color>
+    <color name="polarisTextWhite">#F9FAFB</color>
+    <color name="polarisTextInk">#212B36</color>
+    <color name="polarisDarkRed">#BF0711</color>
+
+    <color name="background">#00044C</color>
+
+</resources>
