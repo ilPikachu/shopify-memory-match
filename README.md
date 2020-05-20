@@ -41,7 +41,7 @@ Make sure it compiles successfully. | Done
 Bonuses | Completion
 --- | ---
 Make the game configurable to match 3 or 4 of the same products instead of 2. | Done
-Make the grid size configurable. (The player needs to match more than 10 sets of the same product). | Done
+Make the grid size configurable. (Match more than 10 sets of the same product). | Done
 Build a slick screen that keeps track of the user’s score. | Done
 Make a button that shuffles the game. | Done
 Feel free to make the app beautiful and add anything else you think would be cool! | Polaris design
