@@ -28,7 +28,7 @@ The architecture of the app follows the MVVM pattern with repository. It utilize
 ### Required Screenshots
 No match | Some match | All match & User wins
 --- | --- | ---
-s1 | s2 | s3
+![No match](/screenshots/no_match.png) | ![Some match](/screenshots/some_matches.png) | ![All match & User wins](/screenshots/user_wins.png)
 
 ### Requirements and Bonuses
 Requirements | Completion
@@ -47,7 +47,13 @@ Make a button that shuffles the game. | Done
 Feel free to make the app beautiful and add anything else you think would be cool! | Polaris design
 
 ### Additional Screenshots
+Home | Configurable game | Score
+--- | --- | ---
+![No match](/screenshots/home.png) | ![Some match](/screenshots/configurable_game.png) | ![All match & User wins](/screenshots/scores.png)
 
+Settings | Settings pairs selection | No score
+--- | --- | ---
+![No match](/screenshots/settings.png) | ![Some match](/screenshots/settings_pair_selection.png) | ![All match & User wins](/screenshots/no_scores.png)
 
 
 ### Easter egg
