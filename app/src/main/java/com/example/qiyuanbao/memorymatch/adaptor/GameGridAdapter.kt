@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.qiyuanbao.memorymatch.databinding.GridViewItemBinding
 import com.example.qiyuanbao.memorymatch.model.ProductImage
 
-class GameGridAdapter() :
+class GameGridAdapter :
     RecyclerView.Adapter<GameGridAdapter.ProductImageViewHolder>() {
 
     private var productImages: List<ProductImage> = mutableListOf()
@@ -16,7 +16,10 @@ class GameGridAdapter() :
     class ProductImageViewHolder(private var binding: GridViewItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(productImage: ProductImage, onCardClickListener: ((productImage: ProductImage) -> Unit)?) {
+        fun bind(
+            productImage: ProductImage,
+            onCardClickListener: ((productImage: ProductImage) -> Unit)?
+        ) {
             binding.productImage = productImage
             binding.cardview.setOnClickListener { onCardClickListener?.invoke(productImage) }
             binding.executePendingBindings()
@@ -24,7 +27,8 @@ class GameGridAdapter() :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductImageViewHolder {
-        val binding = GridViewItemBinding.inflate(LayoutInflater.from(parent.context))
+        val binding =
+            GridViewItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ProductImageViewHolder(binding)
     }
 
@@ -33,7 +37,7 @@ class GameGridAdapter() :
         holder.bind(productImage, onCardClickListener)
     }
 
-    override fun getItemCount() =  productImages.size
+    override fun getItemCount() = productImages.size
 
     fun submitNewList(productImages: List<ProductImage>) {
         this.productImages = productImages

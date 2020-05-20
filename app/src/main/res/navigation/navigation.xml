@@ -24,6 +24,13 @@
             app:exitAnim="@anim/fragment_close_exit"
             app:popEnterAnim="@anim/fragment_close_enter"
             app:popExitAnim="@anim/fragment_close_exit" />
+        <action
+            android:id="@+id/action_homeFragment_to_scoreFragment"
+            app:destination="@id/scoreFragment"
+            app:enterAnim="@anim/fragment_close_enter"
+            app:exitAnim="@anim/fragment_close_exit"
+            app:popEnterAnim="@anim/fragment_close_enter"
+            app:popExitAnim="@anim/fragment_close_exit" />
     </fragment>
     <fragment
         android:id="@+id/gameFragment"
@@ -43,4 +50,9 @@
         android:name="com.example.qiyuanbao.memorymatch.settings.SettingsFragment"
         android:label="SettingsFragment"
         tools:layout="@layout/fragment_settings" />
+    <fragment
+        android:id="@+id/scoreFragment"
+        android:name="com.example.qiyuanbao.memorymatch.score.ScoreFragment"
+        android:label="ScoreFragment"
+        tools:layout="@layout/fragment_score"/>
 </navigation>

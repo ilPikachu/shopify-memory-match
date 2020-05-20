@@ -11,7 +11,6 @@ import com.example.qiyuanbao.memorymatch.model.ProductImage
 import com.example.qiyuanbao.memorymatch.model.Status
 import com.example.qiyuanbao.memorymatch.utils.CustomDrawableCrossFadeFactory
 
-
 private const val WIDTH = 500
 private const val HEIGHT = 500
 

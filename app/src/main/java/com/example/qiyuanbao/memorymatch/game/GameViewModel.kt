@@ -7,20 +7,31 @@ import com.example.qiyuanbao.memorymatch.database.getDateBase
 import com.example.qiyuanbao.memorymatch.extension.notifyObserver
 import com.example.qiyuanbao.memorymatch.model.ProductImage
 import com.example.qiyuanbao.memorymatch.model.Status
+import com.example.qiyuanbao.memorymatch.model.UserScore
 import com.example.qiyuanbao.memorymatch.repository.ProductImagesRepository
+import com.example.qiyuanbao.memorymatch.repository.UserScoreRepository
 import kotlinx.coroutines.launch
 import java.io.IOException
 
-class GameViewModel(application: Application, private val gridSize: Int, private val matchPairs: Int) : AndroidViewModel(application) {
+class GameViewModel(
+    application: Application,
+    private val gridSize: Int,
+    private val matchPairs: Int
+) : AndroidViewModel(application) {
     companion object {
         private const val TAG = "GameViewModel"
     }
 
     private val productImagesRepository = ProductImagesRepository(getDateBase(application))
+    private val userScoreRepository = UserScoreRepository(getDateBase(application))
 
-    private val _gameScore = MutableLiveData(0)
-    val gameScore: LiveData<Int>
-        get() = _gameScore
+    private val _pairsFound = MutableLiveData(0)
+    val pairsFound: LiveData<Int>
+        get() = _pairsFound
+
+    private val _userScore = MutableLiveData(UserScore(0))
+    val userScore: LiveData<UserScore>
+        get() = _userScore
 
     private val _productImages = MutableLiveData<List<ProductImage>>()
     val productImages: LiveData<List<ProductImage>>
@@ -38,12 +49,12 @@ class GameViewModel(application: Application, private val gridSize: Int, private
         // coroutine to launch with viewModelScope to retreat data from repository
         // This scope is bound to Dispatchers.Main and will be automatically cancelled when ViewModel is cleared
         viewModelScope.launch {
-            var productImages =  productImagesRepository.getProductImages()
+            var productImages = productImagesRepository.getProductImages()
 
-            if (productImages.isEmpty()){
+            if (productImages.isEmpty()) {
                 try {
                     productImagesRepository.refreshProductImages()
-                    productImages =  productImagesRepository.getProductImages()
+                    productImages = productImagesRepository.getProductImages()
                 } catch (networkError: IOException) {
                     Log.e(TAG, "Network error")
                 }
@@ -100,7 +111,8 @@ class GameViewModel(application: Application, private val gridSize: Int, private
     }
 
     fun onPlayAgain() {
-        resetScore()
+        resetPairsFound()
+        resetUserScore()
         resetAllCardsState()
     }
 
@@ -155,19 +167,32 @@ class GameViewModel(application: Application, private val gridSize: Int, private
             }
         }
         _productImages.notifyObserver()
-        updateGameScore()
+
+        updateUserScore()
+        updatePairsFound()
+
+        checkPairsFound()?.let {
+            if (it == gridSize) {
+                onGameEnd()
+            }
+        }
     }
 
     private fun shuffleAllCards() {
         _productImages.value = _productImages.value?.shuffled()
     }
 
-    private fun updateGameScore() {
-        _gameScore.value = _gameScore.value?.plus(1)
-        checkScore()?.let {
-            if (it == gridSize) {
-                onGameEnd()
-            }
+    private fun updatePairsFound() {
+        _pairsFound.value = _pairsFound.value?.plus(1)
+    }
+
+    // increasing matchPairs difficulty will increase user score per match
+    private fun updateUserScore() {
+        val score = (matchPairs - 1) * 10
+
+        _userScore.value?.scores?.let {
+            _userScore.value?.scores = it + score
+            _userScore.notifyObserver()
         }
     }
 
@@ -178,14 +203,30 @@ class GameViewModel(application: Application, private val gridSize: Int, private
         shuffleAllCards()
     }
 
-    private fun checkScore(): Int? = _gameScore.value
+    private fun checkPairsFound(): Int? = _pairsFound.value
 
-    private fun resetScore() {
-        _gameScore.value = 0
+    private fun resetPairsFound() {
+        _pairsFound.value = 0
+    }
+
+    private fun resetUserScore() {
+        _userScore.value?.scores?.let {
+            _userScore.value?.scores = 0
+            _userScore.notifyObserver()
+        }
     }
 
     private fun onGameEnd() {
         _gameEndEvent.value = true
+        _userScore.value?.let {
+            submitUserScore(it)
+        }
+    }
+
+    private fun submitUserScore(userScore: UserScore) {
+        viewModelScope.launch {
+            userScoreRepository.insertUserScore(userScore)
+        }
     }
 
     fun onGameEndComplete() {

@@ -5,19 +5,24 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.qiyuanbao.memorymatch.database.dao.ProductImageDao
+import com.example.qiyuanbao.memorymatch.database.dao.UserScoreDao
 import com.example.qiyuanbao.memorymatch.database.entitity.ProductImageEntity
+import com.example.qiyuanbao.memorymatch.database.entitity.UserScoreEntity
 
 @Database(
     entities = [
-        ProductImageEntity::class
-    ], version = 1
+        ProductImageEntity::class,
+        UserScoreEntity::class
+    ], version = 2
 )
 abstract class AppDatabase : RoomDatabase() {
     companion object {
         const val DATABASE_NAME = "gamedb"
     }
 
-    abstract fun getProductImages(): ProductImageDao
+    abstract fun getProductImageDao(): ProductImageDao
+
+    abstract fun getUserScoreDao(): UserScoreDao
 }
 
 // DB singleton instance

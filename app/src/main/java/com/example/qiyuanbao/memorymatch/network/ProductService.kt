@@ -10,7 +10,6 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-// https://shopicruit.myshopify.com/admin/products.json?page=1&access_token=c32313df0d0ef512ca64d5b336a0d7c6
 private const val PRODUCT_BASE_URL = "https://shopicruit.myshopify.com/admin/"
 private const val PRODUCT_JSON = "products.json"
 private const val PRODUCT_PAGE = "1"

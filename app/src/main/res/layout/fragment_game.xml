@@ -15,13 +15,13 @@
         android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/flag"
+            android:id="@+id/score_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/spacing_base"
-            android:src="@drawable/ic_flag"
+            android:src="@drawable/ic_trophy"
             app:layout_constraintBottom_toTopOf="@+id/guideline"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/flag"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -30,10 +30,33 @@
             style="@style/Shopify.Polaris.Typography.Heading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/spacing_base"
+            app:layout_constraintBottom_toTopOf="@+id/guideline"
+            app:layout_constraintEnd_toEndOf="@+id/score_icon"
+            app:layout_constraintStart_toStartOf="@+id/score_icon"
+            app:layout_constraintTop_toBottomOf="@+id/score_icon"
+            tools:text="0" />
+
+        <ImageView
+            android:id="@+id/flag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_flag"
             app:layout_constraintBottom_toTopOf="@+id/guideline"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/score_icon"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/pairs_found"
+            style="@style/Shopify.Polaris.Typography.Heading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/spacing_base"
+            android:layout_marginStart="15dp"
+            app:layout_constraintBottom_toTopOf="@+id/guideline"
+            app:layout_constraintEnd_toEndOf="@+id/flag"
+            app:layout_constraintStart_toStartOf="@+id/flag"
             app:layout_constraintTop_toBottomOf="@+id/flag"
             tools:text="0" />
 
@@ -41,6 +64,7 @@
             android:id="@+id/guideline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_tight"
             android:orientation="horizontal"
             app:layout_constraintGuide_begin="70dp" />
 

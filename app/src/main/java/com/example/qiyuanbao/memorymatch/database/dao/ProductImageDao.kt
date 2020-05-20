@@ -13,4 +13,5 @@ interface ProductImageDao {
 
     @Insert(onConflict = REPLACE)
     suspend fun insetAll(productImages: List<ProductImageEntity>)
+
 }

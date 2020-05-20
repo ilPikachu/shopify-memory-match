@@ -22,6 +22,7 @@ import com.example.qiyuanbao.memorymatch.R
 import com.example.qiyuanbao.memorymatch.databinding.FragmentGameBinding
 import com.example.qiyuanbao.memorymatch.extension.dpToPx
 import com.example.qiyuanbao.memorymatch.adaptor.GameGridAdapter
+import com.example.qiyuanbao.memorymatch.model.UserScore
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 
@@ -50,10 +51,6 @@ class GameFragment : Fragment() {
         setupRecyclerView()
 
         return binding.root
-    }
-
-    override fun onStart() {
-        super.onStart()
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -85,7 +82,8 @@ class GameFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
 
         onObserveProductImages()
-        onObserveGameScore()
+        onObservePairsFound()
+        onObserveUserScore()
         onObserveGameEndEvent()
 
         binding.shuffleButton.setOnClickListener {
@@ -112,9 +110,15 @@ class GameFragment : Fragment() {
         })
     }
 
-    private fun onObserveGameScore() {
-        viewModel.gameScore.observe(viewLifecycleOwner, Observer {
-            updateGameScore(it)
+    private fun onObservePairsFound() {
+        viewModel.pairsFound.observe(viewLifecycleOwner, Observer {
+            updatePairsFound(it)
+        })
+    }
+
+    private fun onObserveUserScore() {
+        viewModel.userScore.observe(viewLifecycleOwner, Observer {
+            updateUserScore(it)
         })
     }
 
@@ -128,9 +132,13 @@ class GameFragment : Fragment() {
         viewModel.onShuffle()
     }
 
-    private fun updateGameScore(gameScore: Int) {
-        val text = "$gameScore / $gridSize"
-        binding.gameScore.text = text
+    private fun updatePairsFound(pairsFound: Int) {
+        val text = "$pairsFound / $gridSize"
+        binding.pairsFound.text = text
+    }
+
+    private fun updateUserScore(userScore: UserScore) {
+        binding.gameScore.text = userScore.scores.toString()
     }
 
     private fun gameFinished() {

@@ -13,6 +13,7 @@
     <string name="timer_enable_preference">Timer</string>
     <string name="game_paris_preference">Game pairs selection</string>
     <string name="grid_size_preference">Grid size selection</string>
+    <string name="no_scores">No Scores</string>
 
     <string-array name="gamePairs">
         <item>2</item>
@@ -28,6 +29,5 @@
         <item>14</item>
         <item>15</item>
     </string-array>
-
 
 </resources>

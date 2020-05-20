@@ -17,7 +17,7 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home,container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
 
         binding.playButton.setOnClickListener {
             it.findNavController().navigate(R.id.action_homeFragment_to_gameFragment)
@@ -25,6 +25,10 @@ class HomeFragment : Fragment() {
 
         binding.settingsButton.setOnClickListener {
             it.findNavController().navigate(R.id.action_homeFragment_to_settingsFragment)
+        }
+
+        binding.userScoreButton.setOnClickListener {
+            it.findNavController().navigate(R.id.action_homeFragment_to_scoreFragment)
         }
 
         return binding.root

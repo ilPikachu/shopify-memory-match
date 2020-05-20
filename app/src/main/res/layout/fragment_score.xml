@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/no_score_text"
+            style="@style/Shopify.Polaris.Typography.Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/no_scores"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/score_list" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_marginTop="@dimen/spacing_tight"
+            android:id="@+id/score_list"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constrainedHeight="true"
+            android:clipToPadding="false"
+            android:scrollbarThumbVertical="@android:color/darker_gray"
+            android:scrollbars="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_height="match_parent"
+            tools:layout_width="match_parent"
+            tools:listitem="@layout/user_score_item"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
