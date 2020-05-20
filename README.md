@@ -19,7 +19,7 @@ The architecture of the app follows the MVVM pattern with repository. It utilize
 
 ## Design with Shopify Polaris
 - Color schemes in the app are selected from [Polaris color palette](https://polaris.shopify.com/design/colors).
-- Dimens follows the [Polaris typography](https://polaris.shopify.com/design/typography#navigation).
+- Dimens follows [Polaris typography](https://polaris.shopify.com/design/typography#navigation).
 - Font family follows [Polaris typography](https://polaris.shopify.com/design/typography#navigation). 
     > "Android devices will display Roboto."
 - Created Shopify styles for ease of development. 
