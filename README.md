@@ -4,6 +4,8 @@ This project is created for the Shopify Android internship challenge (Fall 2020)
 
 The architecture of the app follows the MVVM pattern with repository. It utilizes modern Android libraries and Shopify Polaris design system for styling.
 
+[Shopify Mobile Developer Project Doc](https://docs.google.com/document/d/1M2VsBSZr8696HU6mO3MWveSB7p3Do9lOkMrjT5nKiEg/edit)
+
 ## Libraries
 - Navigation (Single activity pattern)
 - ViewModel
