@@ -45,6 +45,49 @@ class GameViewModel(
         getProductDetails()
     }
 
+    fun onCardClicked(productImage: ProductImage) {
+        /*
+            1. Set the current card to flip
+            2. if current flipped card count is equal to matched pairs, check if they are all matched
+                if yes set them all to match
+            3. if the current flipped card count is equal to matchPairs + 1 we need to reset all flipped
+            except for last clicked card
+        */
+        setCardFlip(productImage)
+
+        val flippedCards = countFlippedCards()
+
+        if (flippedCards == matchPairs && isAllFlippedCardsMatched()) {
+            setAllFlippedCardsToMatch()
+        } else if (flippedCards == matchPairs + 1) {
+            setAllFlippedCardsToAwait()
+            setCardFlip(productImage)
+        }
+
+        _productImages.notifyObserver()
+    }
+
+    fun onShuffle() {
+        shuffleAllCards()
+    }
+
+    fun onPlayAgain() {
+        resetPairsFound()
+        resetUserScore()
+        resetAllCardsState()
+    }
+
+    private fun onGameEnd() {
+        _gameEndEvent.value = true
+        _userScore.value?.let {
+            submitUserScore(it)
+        }
+    }
+
+    fun onGameEndComplete() {
+        _gameEndEvent.value = false
+    }
+
     private fun getProductDetails() {
         // coroutine to launch with viewModelScope to retreat data from repository
         // This scope is bound to Dispatchers.Main and will be automatically cancelled when ViewModel is cleared
@@ -65,125 +108,80 @@ class GameViewModel(
     }
 
     private fun getFilteredProductImages(productImages: List<ProductImage>): List<ProductImage> {
-        val initialProductImages = productImages
+        val initialFilteredProductImages = productImages
             .shuffled()
             .take(gridSize)
 
         // deep copy
-        val finalProductImages = mutableListOf<ProductImage>()
-        repeat(matchPairs) { finalProductImages.addAll(initialProductImages.map { it.copy() }) }
+        val finalFilteredProductImages = mutableListOf<ProductImage>()
+        repeat(matchPairs) { finalFilteredProductImages.addAll(initialFilteredProductImages.map { it.copy() }) }
 
-        return finalProductImages.shuffled()
+        return finalFilteredProductImages.shuffled()
     }
 
-    fun onCardClicked(productImage: ProductImage) {
-        /*
-             if the current card is flip or match do nothing
-             if the current card is await change it to flip
-             once it's flip
-                check match time with another peer
-                check total flipped cards
-                    if the difference > 1 match failed, reset all to await except for already matched
-                    if the difference == 1 and flippedCardNum == desired match pairs, match all peers
-                    if the difference == 1 only, then continue flip the card
-        */
-        if (isCardFlip(productImage) || isCardMatch(productImage))
-        // do nothing
-        else if (isCardAwait(productImage)) {
-            setCardFlip(productImage)
-
-            val matchedTimes = countCardMarchTimes(productImage)
-            val flippedCardsNum = countFlippedCards()
-            val difference = flippedCardsNum - matchedTimes
-
-            if (difference > 1)
-                setCardsAwait()
-            else if (difference == 1 && flippedCardsNum == matchPairs)
-                setCardsMatch(productImage)
-            else if (difference == 1)
-                setCardFlip(productImage)
-
-        }
+    private fun isAllFlippedCardsMatched(): Boolean {
+        val currentFlippedCard = getFlippedCards()
+        return currentFlippedCard.all { it.imgSrcUrl == currentFlippedCard[0].imgSrcUrl }
     }
 
-    fun onShuffle() {
-        shuffleAllCards()
-    }
-
-    fun onPlayAgain() {
-        resetPairsFound()
-        resetUserScore()
-        resetAllCardsState()
-    }
-
-    private fun countCardMarchTimes(productImage: ProductImage): Int {
-        var matchedTimes = 0
-
+    private fun getFlippedCards(): MutableList<ProductImage> {
+        val flipCardList = mutableListOf<ProductImage>()
         _productImages.value?.forEach {
-            if (it !== productImage && it.imgSrcUrl == productImage.imgSrcUrl
-                && (isCardFlip(it) && isCardFlip(productImage))
-            ) {
-                matchedTimes++
-            }
+            if (isCardFlip(it)) flipCardList.add(it)
         }
 
-        return matchedTimes
+        return flipCardList
     }
 
     private fun countFlippedCards(): Int {
         var count = 0
         _productImages.value?.forEach {
-            if (isCardFlip(it)) {
-                count++
-            }
+            if (isCardFlip(it)) count++
         }
 
         return count
     }
 
-    private fun isCardAwait(productImage: ProductImage) = productImage.status == Status.AWAIT
-
     private fun isCardFlip(productImage: ProductImage) = productImage.status == Status.FLIP
 
-    private fun isCardMatch(productImage: ProductImage) = productImage.status == Status.MATCH
+    private fun setCardAwait(productImage: ProductImage) {
+        productImage.status = Status.AWAIT
+    }
 
-    private fun setCardsAwait() {
-        _productImages.value?.forEach {
-            if (it.status != Status.MATCH)
-                it.status = Status.AWAIT
-        }
-        _productImages.notifyObserver()
+    private fun setCardMatch(productImage: ProductImage) {
+        productImage.status = Status.MATCH
     }
 
     private fun setCardFlip(productImage: ProductImage) {
         productImage.status = Status.FLIP
-        _productImages.notifyObserver()
     }
 
-    private fun setCardsMatch(productImage: ProductImage) {
+    private fun setAllFlippedCardsToAwait() {
         _productImages.value?.forEach {
-            if (it.imgSrcUrl == productImage.imgSrcUrl) {
-                it.status = Status.MATCH
-            }
+            if (isCardFlip(it)) setCardAwait(it)
         }
-        _productImages.notifyObserver()
+    }
+
+    private fun setAllFlippedCardsToMatch() {
+        _productImages.value?.forEach {
+            if (isCardFlip(it)) setCardMatch(it)
+        }
 
         updateUserScore()
         updatePairsFound()
 
-        checkPairsFound()?.let {
-            if (it == gridSize) {
-                onGameEnd()
-            }
-        }
-    }
-
-    private fun shuffleAllCards() {
-        _productImages.value = _productImages.value?.shuffled()
+        if (isGameEnd())
+            onGameEnd()
     }
 
     private fun updatePairsFound() {
         _pairsFound.value = _pairsFound.value?.plus(1)
+    }
+
+    private fun checkPairsFound(): Int? = _pairsFound.value
+
+    private fun resetPairsFound() {
+        _pairsFound.value = 0
     }
 
     // increasing matchPairs difficulty will increase user score per match
@@ -196,41 +194,28 @@ class GameViewModel(
         }
     }
 
+    private fun resetUserScore() {
+        _userScore.value?.scores = 0
+        _userScore.notifyObserver()
+    }
+
+    private fun shuffleAllCards() {
+        _productImages.value = _productImages.value?.shuffled()
+    }
+
     private fun resetAllCardsState() {
         _productImages.value?.forEach {
-            it.status = Status.AWAIT
+            setCardAwait(it)
         }
         shuffleAllCards()
     }
 
-    private fun checkPairsFound(): Int? = _pairsFound.value
-
-    private fun resetPairsFound() {
-        _pairsFound.value = 0
-    }
-
-    private fun resetUserScore() {
-        _userScore.value?.scores?.let {
-            _userScore.value?.scores = 0
-            _userScore.notifyObserver()
-        }
-    }
-
-    private fun onGameEnd() {
-        _gameEndEvent.value = true
-        _userScore.value?.let {
-            submitUserScore(it)
-        }
-    }
+    private fun isGameEnd(): Boolean = checkPairsFound() == gridSize
 
     private fun submitUserScore(userScore: UserScore) {
         viewModelScope.launch {
             userScoreRepository.insertUserScore(userScore)
         }
-    }
-
-    fun onGameEndComplete() {
-        _gameEndEvent.value = false
     }
 
 }

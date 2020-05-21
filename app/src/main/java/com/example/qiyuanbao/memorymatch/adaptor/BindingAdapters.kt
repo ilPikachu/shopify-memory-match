@@ -17,10 +17,6 @@ private const val HEIGHT = 500
 // Called when the productImage is used for a ImageView.
 @BindingAdapter("image")
 fun bindImage(imageView: ImageView, productImage: ProductImage?) {
-    val factory = CustomDrawableCrossFadeFactory.Builder()
-        .setCrossFadeEnabled(true)
-        .build()
-
     productImage?.let {
         when (it.status) {
             Status.MATCH -> {
@@ -41,7 +37,6 @@ fun bindImage(imageView: ImageView, productImage: ProductImage?) {
                 Glide.with(imageView.context)
                     .load(uri)
                     .override(WIDTH, HEIGHT)
-                    .transition(DrawableTransitionOptions.with(factory))
                     .into(imageView)
             }
         }
