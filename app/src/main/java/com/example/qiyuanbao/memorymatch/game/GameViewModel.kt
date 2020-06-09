@@ -53,18 +53,20 @@ class GameViewModel(
             3. if the current flipped card count is equal to matchPairs + 1 we need to reset all flipped
             except for last clicked card
         */
-        setCardFlip(productImage)
-
-        val flippedCards = countFlippedCards()
-
-        if (flippedCards == matchPairs && isAllFlippedCardsMatched()) {
-            setAllFlippedCardsToMatch()
-        } else if (flippedCards == matchPairs + 1) {
-            setAllFlippedCardsToAwait()
+        if (isCardAwait(productImage)) {
             setCardFlip(productImage)
-        }
 
-        _productImages.notifyObserver()
+            val flippedCards = countFlippedCards()
+
+            if (flippedCards == matchPairs && isAllFlippedCardsMatched()) {
+                setAllFlippedCardsToMatch()
+            } else if (flippedCards == matchPairs + 1) {
+                setAllFlippedCardsToAwait()
+                setCardFlip(productImage)
+            }
+
+            _productImages.notifyObserver()
+        }
     }
 
     fun onShuffle() {
@@ -143,6 +145,8 @@ class GameViewModel(
     }
 
     private fun isCardFlip(productImage: ProductImage) = productImage.status == Status.FLIP
+
+    private fun isCardAwait(productImage: ProductImage) = productImage.status == Status.AWAIT
 
     private fun setCardAwait(productImage: ProductImage) {
         productImage.status = Status.AWAIT

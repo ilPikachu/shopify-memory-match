@@ -77,10 +77,7 @@ class GameFragment : Fragment() {
                 GameViewModelFactory(it, gridSize, matchPairs)
             ).get(GameViewModel::class.java)
         }
-
-        binding.gameViewModel = viewModel
-        binding.lifecycleOwner = viewLifecycleOwner
-
+        
         onObserveProductImages()
         onObservePairsFound()
         onObserveUserScore()

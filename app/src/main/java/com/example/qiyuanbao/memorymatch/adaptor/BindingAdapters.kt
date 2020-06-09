@@ -42,15 +42,3 @@ fun bindImage(imageView: ImageView, productImage: ProductImage?) {
         }
     }
 }
-
-// Called when listData is used by a recyclerView, and when the ProductImage list changes.
-@BindingAdapter("listData")
-fun bindRecyclerView(
-    recyclerView: RecyclerView,
-    data: List<ProductImage>?
-) {
-    val adapter = recyclerView.adapter as GameGridAdapter
-    data?.let {
-        adapter.submitNewList(it)
-    }
-}
