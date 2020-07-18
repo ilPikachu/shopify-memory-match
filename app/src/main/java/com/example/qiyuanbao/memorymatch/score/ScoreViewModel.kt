@@ -1,15 +1,11 @@
 package com.example.qiyuanbao.memorymatch.score
 
-import android.app.Application
 import androidx.lifecycle.*
-import com.example.qiyuanbao.memorymatch.database.getDateBase
 import com.example.qiyuanbao.memorymatch.model.UserScore
 import com.example.qiyuanbao.memorymatch.repository.UserScoreRepository
 import kotlinx.coroutines.launch
 
-class ScoreViewModel(application: Application) : AndroidViewModel(application) {
-
-    private val userScoreRepository = UserScoreRepository(getDateBase(application))
+class ScoreViewModel(private val userScoreRepository: UserScoreRepository) : ViewModel() {
 
     private val _userScores = MutableLiveData<List<UserScore>>()
     val userScores: LiveData<List<UserScore>>

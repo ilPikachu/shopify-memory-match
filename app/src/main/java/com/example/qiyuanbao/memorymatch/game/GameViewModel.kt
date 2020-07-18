@@ -1,9 +1,7 @@
 package com.example.qiyuanbao.memorymatch.game
 
-import android.app.Application
 import android.util.Log
 import androidx.lifecycle.*
-import com.example.qiyuanbao.memorymatch.database.getDateBase
 import com.example.qiyuanbao.memorymatch.extension.notifyObserver
 import com.example.qiyuanbao.memorymatch.model.ProductImage
 import com.example.qiyuanbao.memorymatch.model.Status
@@ -14,16 +12,15 @@ import kotlinx.coroutines.launch
 import java.io.IOException
 
 class GameViewModel(
-    application: Application,
+    private val productImagesRepository: ProductImagesRepository,
+    private val userScoreRepository: UserScoreRepository,
     private val gridSize: Int,
     private val matchPairs: Int
-) : AndroidViewModel(application) {
+) : ViewModel() {
+    // TODO: Convert the game into using HashMap implementation
     companion object {
         private const val TAG = "GameViewModel"
     }
-
-    private val productImagesRepository = ProductImagesRepository(getDateBase(application))
-    private val userScoreRepository = UserScoreRepository(getDateBase(application))
 
     private val _pairsFound = MutableLiveData(0)
     val pairsFound: LiveData<Int>
