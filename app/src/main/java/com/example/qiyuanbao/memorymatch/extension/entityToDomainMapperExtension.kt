@@ -1,9 +1,9 @@
 package com.example.qiyuanbao.memorymatch.extension
 
-import com.example.qiyuanbao.memorymatch.database.entitity.ProductImageEntity
-import com.example.qiyuanbao.memorymatch.database.entitity.UserScoreEntity
-import com.example.qiyuanbao.memorymatch.model.ProductImage
-import com.example.qiyuanbao.memorymatch.model.UserScore
+import com.example.qiyuanbao.memorymatch.data.database.entitity.ProductImageEntity
+import com.example.qiyuanbao.memorymatch.data.database.entitity.UserScoreEntity
+import com.example.qiyuanbao.memorymatch.data.model.ProductImage
+import com.example.qiyuanbao.memorymatch.data.model.UserScore
 
 // Mapper for mapping ProductImageEntity to ProductImage domain Model
 @JvmName("productEntitiesToProductImages")

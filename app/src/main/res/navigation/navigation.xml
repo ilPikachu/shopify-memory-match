@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.qiyuanbao.memorymatch.home.HomeFragment"
+        android:name="com.example.qiyuanbao.memorymatch.ui.home.HomeFragment"
         android:label="HomeFragment"
         tools:layout="@layout/fragment_home">
         <action
@@ -34,7 +34,7 @@
     </fragment>
     <fragment
         android:id="@+id/gameFragment"
-        android:name="com.example.qiyuanbao.memorymatch.game.GameFragment"
+        android:name="com.example.qiyuanbao.memorymatch.ui.game.GameFragment"
         android:label="GameFragment"
         tools:layout="@layout/fragment_game">
         <action
@@ -49,12 +49,12 @@
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="com.example.qiyuanbao.memorymatch.settings.SettingsFragment"
+        android:name="com.example.qiyuanbao.memorymatch.ui.settings.SettingsFragment"
         android:label="SettingsFragment"
         tools:layout="@layout/fragment_settings" />
     <fragment
         android:id="@+id/scoreFragment"
-        android:name="com.example.qiyuanbao.memorymatch.score.ScoreFragment"
+        android:name="com.example.qiyuanbao.memorymatch.ui.score.ScoreFragment"
         android:label="ScoreFragment"
         tools:layout="@layout/fragment_score"/>
 </navigation>

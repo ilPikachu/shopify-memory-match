@@ -5,7 +5,7 @@
     <data>
         <variable
             name="productImage"
-            type="com.example.qiyuanbao.memorymatch.model.ProductImage" />
+            type="com.example.qiyuanbao.memorymatch.data.model.ProductImage" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
